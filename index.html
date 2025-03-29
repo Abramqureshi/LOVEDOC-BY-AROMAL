@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DoctorLove - Relationship Helper</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --valentine-pink: #ff6b8b;
+            --valentine-red: #ff2d4e;
+            --valentine-light: #fff0f3;
+            --valentine-dark: #d1003a;
+            --bg-color: #fff0f3;
+            --text-color: #333;
+            --card-bg: white;
+            --shadow-color: rgba(255, 107, 139, 0.3);
+            --border-color: var(--valentine-pink);
+        }
+
+        .dark-mode {
+            --bg-color: #1a001a;
+            --text-color: #ffebf0;
+            --card-bg: #330033;
+            --shadow-color: rgba(100, 0, 50, 0.5);
+            --border-color: #ff4d88;
+            --valentine-pink: #ff4d88;
+            --valentine-red: #ff1a75;
+            --valentine-light: #330033;
+            --valentine-dark: #ff80b3;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-color);
+            background-image: url('https://www.transparenttextures.com/patterns/light-honeycomb.png');
+            color: var(--text-color);
+            transition: all 0.5s ease;
+            min-height: 100vh;
+            padding-bottom: 50px;
+        }
+
+        body.dark-mode {
+            background-image: url('https://www.transparenttextures.com/patterns/dark-honeycomb.png');
+        }
+        
+        .valentine-header {
+            font-family: 'Dancing+Script', cursive;
+            color: var(--valentine-red);
+            text-shadow: 2px 2px 4px rgba(255, 45, 78, 0.2);
+            position: relative;
+        }
+        
+        .valentine-header:after {
+            content: "❤";
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            animation: heartbeat 1.5s infinite;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: translateY(-50%) scale(1); }
+            25% { transform: translateY(-50%) scale(1.1); }
+            50% { transform: translateY(-50%) scale(1); }
+            75% { transform: translateY(-50%) scale(1.1); }
+            100% { transform: translateY(-50%) scale(1); }
+        }
+        
+        .scrolling-news {
+            background: linear-gradient(to right, var(--valentine-pink), var(--valentine-red));
+            padding: 12px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            box-shadow: 0 2px 10px var(--shadow-color);
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 30px;
+        }
+        
+        .scrolling-news-content {
+            display: inline-block;
+            padding-left: 100%;
+            animation: scroll 20s linear infinite;
+        }
+        
+        @keyframes scroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-100%); }
+        }
+        
+        .love-tip {
+            padding: 0 25px;
+            color: white;
+            font-weight: 500;
+            font-size: 1.1rem;
+            position: relative;
+        }
+        
+        .love-tip:before {
+            content: "❤";
+            position: absolute;
+            left: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .issue-form {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            padding: 30px;
+            border: 2px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .issue-form:before {
+            content: "";
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background-color: rgba(255, 214, 221, 0.3);
+            border-radius: 50%;
+        }
+        
+        .issue-form:after {
+            content: "";
+            position: absolute;
+            bottom: -30px;
+            left: -30px;
+            width: 100px;
+            height: 100px;
+            background-color: rgba(255, 214, 221, 0.3);
+            border-radius: 50%;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: var(--valentine-dark);
+        }
+        
+        .form-select, .form-control {
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 10px 15px;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+        }
+        
+        .form-select:focus, .form-control:focus {
+            border-color: var(--valentine-red);
+            box-shadow: 0 0 0 0.25rem rgba(255, 107, 139, 0.25);
+        }
+        
+        .btn-valentine {
+            background: linear-gradient(to right, var(--valentine-pink), var(--valentine-red));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 30px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+        
+        .btn-valentine:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px var(--shadow-color);
+            color: white;
+        }
+
+        /* Smaller LoveMeter button */
+        .btn-lovemeter {
+            background: linear-gradient(to right, #9c27b0, #e91e63);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 8px 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(156, 39, 176, 0.3);
+            font-size: 0.875rem;
+        }
+        
+        .btn-lovemeter:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(233, 30, 99, 0.4);
+            color: white;
+        }
+        
+        .heart-decoration {
+            position: absolute;
+            color: var(--valentine-pink);
+            opacity: 0.3;
+            font-size: 1.5rem;
+            z-index: 0;
+        }
+        
+        .heart-1 { top: 10%; left: 5%; animation: float 6s ease-in-out infinite; }
+        .heart-2 { top: 70%; right: 10%; animation: float 8s ease-in-out infinite 2s; }
+        .heart-3 { top: 30%; right: 15%; animation: float 5s ease-in-out infinite 1s; }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+        
+        .card {
+            border-radius: 15px;
+            border: none;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            transition: all 0.3s;
+            overflow: hidden;
+            background-color: var(--card-bg);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px var(--shadow-color);
+        }
+        
+        .card-header {
+            background-color: var(--valentine-pink);
+            color: white;
+            font-weight: 600;
+            border-bottom: none;
+        }
+        
+        .success-stories {
+            position: relative;
+            padding: 40px 0;
+        }
+        
+        .success-stories:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 100%;
+            background-image: radial-gradient(var(--valentine-pink) 1px, transparent 1px);
+            background-size: 15px 15px;
+            opacity: 0.1;
+            z-index: -1;
+        }
+        
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .heart {
+            position: absolute;
+            opacity: 0;
+            animation: falling-hearts 10s linear infinite;
+        }
+        
+        @keyframes falling-hearts {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(calc(100vh + 100px)) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .solution-panel {
+            background-color: rgba(255, 214, 221, 0.2);
+            border-left: 4px solid var(--valentine-red);
+            padding: 20px;
+            border-radius: 0 10px 10px 0;
+            margin-top: 20px;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .solution-item {
+            padding: 8px 0;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .solution-item:before {
+            content: "❤";
+            position: absolute;
+            left: 5px;
+            color: var(--valentine-red);
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        #solutionsContainer {
+            transition: all 0.5s ease;
+        }
+
+        .theme-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .watermark {
+    position: fixed;
+    bottom: 20px;  /* Increased from 10px */
+    left: 20px;    /* Changed from right to left */
+    font-size: 12px;
+    color: var(--valentine-pink);
+    opacity: 0.7;
+    z-index: 1000;
+}
+
+        .romantic-cursor {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .hearts-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .heart-particle {
+            position: absolute;
+            color: var(--valentine-pink);
+            animation: falling-hearts linear infinite;
+        }
+
+        .solution-history {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: var(--card-bg);
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px var(--shadow-color);
+            z-index: 1000;
+            max-width: 300px;
+        }
+
+        .alert {
+            background-color: var(--card-bg);
+            border-left: 4px solid var(--valentine-pink);
+        }
+
+        .lovemeter-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Switcher -->
+    <div class="theme-switcher">
+        <button id="themeToggle" class="btn btn-sm btn-valentine">
+            🌙 Dark Mode
+        </button>
+    </div>
+
+    <!-- LoveMeter Button (Smaller) -->
+    <div class="lovemeter-container">
+        <button id="lovemeterBtn" class="btn btn-lovemeter">
+            ❤ LoveMeter
+        </button>
+    </div>
+
+    <!-- Watermark -->
+    <div class="watermark">Created with ❤ by Aromal BS</div>
+
+    <!-- Hearts Rain -->
+    <div class="hearts-rain" id="heartsRain"></div>
+
+    <!-- Floating Hearts Background -->
+    <div class="floating-hearts" id="floatingHearts"></div>
+    
+    <!-- Scrolling News Ticker -->
+    <div class="scrolling-news">
+        <div class="scrolling-news-content">
+            <span class="love-tip">Small gestures of love daily strengthen relationships more than grand occasional ones</span>
+            <span class="love-tip">The 5 love languages: Words, Time, Gifts, Acts, Touch - discover yours today!</span>
+            <span class="love-tip">Conflict is growth trying to happen - approach disagreements with curiosity</span>
+            <span class="love-tip">Schedule regular "us time" just like any other important appointment</span>
+            <span class="love-tip">Practice gratitude for your partner daily - it transforms perspective</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="text-center mb-5">
+                    <h1 class="valentine-header display-3 mb-3">LoveSync</h1>
+                    <p class="lead" style="color: var(--valentine-dark);">Mending hearts, strengthening bonds ❤</p>
+                </div>
+                
+                <!-- Heart Decorations -->
+                <div class="heart-decoration heart-1">❤</div>
+                <div class="heart-decoration heart-2">❤</div>
+                <div class="heart-decoration heart-3">❤</div>
+                
+                <div class="issue-form position-relative">
+                    <h3 class="text-center mb-4" style="color: var(--valentine-red);">Share What's On Your Heart</h3>
+                    
+                    <form id="issueForm">
+                        <!-- Partner Type Selection -->
+                        <div class="mb-4">
+                            <label for="partnerType" class="form-label">Our Love Story</label>
+                            <select class="form-select" id="partnerType" required>
+                                <option value="" selected disabled>Select your relationship type</option>
+                                <option value="male-female">❤ Man & Woman</option>
+                                <option value="male-male">❤ Man & Man</option>
+                                <option value="female-female">❤ Woman & Woman</option>
+                                <option value="other">❤ Special Unique Love</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Issue Duration -->
+                        <div class="mb-4">
+                            <label for="issueDuration" class="form-label">How long has this weighed on your heart?</label>
+                            <select class="form-select" id="issueDuration" required>
+                                <option value="" selected disabled>Select duration</option>
+                                <option value="less-than-week">💔 Less than a week</option>
+                                <option value="1-month">💝 About 1 month</option>
+                                <option value="3-months">💞 1-3 months</option>
+                                <option value="6-months">💗 3-6 months</option>
+                                <option value="1-year">💖 6-12 months</option>
+                                <option value="more-than-year">💓 More than 1 year</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Main Issue Dropdown -->
+                        <div class="mb-4">
+                            <label for="mainIssue" class="form-label">What's troubling your relationship?</label>
+                            <select class="form-select" id="mainIssue" required>
+                                <option value="" selected disabled>Choose from common heartaches</option>
+                                <optgroup label="❤‍🩹 Trust & Honesty">
+                                    <option value="cheating">Broken trust or infidelity</option>
+                                    <option value="lying">White lies adding up</option>
+                                    <option value="secrets">Painful secrets between us</option>
+                                    <option value="jealousy">Overwhelming jealousy</option>
+                                    <option value="privacy">Privacy concerns</option>
+                                </optgroup>
+                                <optgroup label="💬 Communication">
+                                    <option value="silent-treatment">Silent treatments</option>
+                                    <option value="not-listening">Feeling unheard</option>
+                                    <option value="misunderstandings">Constant misunderstandings</option>
+                                    <option value="dominating">One partner dominating conversations</option>
+                                    <option value="dismissing">Dismissing concerns</option>
+                                </optgroup>
+                                <optgroup label="💝 Intimacy">
+                                    <option value="affection">Different affection needs</option>
+                                    <option value="intimacy">Lack of physical closeness</option>
+                                    <option value="romance">Missing romance</option>
+                                    <option value="appearance">Insecurity about appearance</option>
+                                    <option value="initiating">Issues initiating intimacy</option>
+                                </optgroup>
+                                <optgroup label="⏰ Time & Attention">
+                                    <option value="neglect">Feeling neglected</option>
+                                    <option value="priorities">Different priorities</option>
+                                    <option value="phone">Too much phone time</option>
+                                    <option value="work">Work-life balance</option>
+                                    <option value="hobbies">Hobbies taking priority</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        
+                        <!-- Custom Issue Option -->
+                        <div class="mb-4">
+                            <label for="customIssue" class="form-label">Or describe your unique situation</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="customIssue" placeholder="Type what's hurting your relationship...">
+                                <button class="btn btn-valentine" type="button" id="addCustomIssue">Add to Heart</button>
+                            </div>
+                            <div id="customIssuesList" class="mt-3"></div>
+                        </div>
+                        
+                        <!-- Submit Button -->
+                        <div class="d-grid gap-2 mt-5">
+                            <button class="btn btn-valentine py-3" type="submit" id="submitBtn">
+                                <span style="font-size: 1.2rem;">Find Healing Solutions</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Solutions Container (initially hidden) -->
+                <div id="solutionsContainer" class="hidden mt-5">
+                    <div class="card">
+                        <div class="card-header text-center">
+                            <h4>❤ Recommended Solutions ❤</h4>
+                        </div>
+                        <div class="card-body">
+                            <div id="solutionContent"></div>
+                            <div class="text-center mt-4">
+                                <button class="btn btn-valentine" id="backToForm">Back to Problem Selection</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recent Success Stories -->
+                <div class="success-stories mt-5" id="successStories">
+                    <h4 class="text-center mb-4" style="color: var(--valentine-red);">Love Stories We've Helped</h4>
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-header text-center">
+                                    ❤ Renewed Vows
+                                </div>
+                                <div class="card-body">
+                                    <p>"After nearly divorcing, LoveSync's communication tools helped us fall in love all over again."</p>
+                                    <small class="text-muted">- James & Sarah, married 12 years</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-header text-center">
+                                    💞 Found Understanding
+                                </div>
+                                <div class="card-body">
+                                    <p>"We finally 'get' each other after learning our love languages through this app."</p>
+                                    <small class="text-muted">- Alex & Taylor, 3 years together</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-header text-center">
+                                    💗 Rekindled Passion
+                                </div>
+                                <div class="card-body">
+                                    <p>"The intimacy challenges brought back sparks we hadn't felt in years!"</p>
+                                    <small class="text-muted">- Maria & Lisa, 8 years together</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let solutionHistory = {};
+        let currentTheme = 'light';
+
+        // Theme toggle functionality
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            if (currentTheme === 'light') {
+                document.body.classList.add('dark-mode');
+                this.textContent = '☀ Light Mode';
+                currentTheme = 'dark';
+            } else {
+                document.body.classList.remove('dark-mode');
+                this.textContent = '🌙 Dark Mode';
+                currentTheme = 'light';
+            }
+        });
+
+        // LoveMeter button functionality - redirects to lovemeter.html
+        document.getElementById('lovemeterBtn').addEventListener('click', function() {
+            window.location.href = "lovemeter.html";
+        });
+
+        // Create hearts rain
+        function createHeartsRain() {
+            const container = document.getElementById('heartsRain');
+            for (let i = 0; i < 30; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-particle';
+                heart.innerHTML = '❤';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                heart.style.animationDuration = (Math.random() * 10 + 5) + 's';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                heart.style.opacity = Math.random() * 0.5 + 0.3;
+                container.appendChild(heart);
+            }
+        }
+
+        // Updated allSolutions with 100+ short, unique solutions
+        const allSolutions = {
+            // Trust & Honesty
+            "cheating": [{
+                title: "Quick Fixes for a Broken Heart",
+                steps: [
+                    "Spill one small truth every night—it's like trust glue.",
+                    "Set a 'no secrets' week—full honesty, no judgment.",
+                    "Make a playlist of 'our songs' to rebuild the vibe.",
+                    "Swap phones for a day—radical trust move.",
+                    "Plan a 'new us' day—fresh start, no past baggage."
+                ],
+                resources: [
+                    "Article: 'Rebuilding Trust' - Psychology Today",
+                    "Tool: 'Trust Exercises' - Gottman Institute",
+                    "Guide: 'Healing After Betrayal' - Verywell Mind"
+                ]
+            }],
+            "lying": [{
+                title: "Getting Back to Truth",
+                steps: [
+                    "Call a 'truth timeout'—five minutes of raw honesty.",
+                    "Stick a 'no fibs' note on the fridge as a reminder.",
+                    "Play 'truth or dare'—keep it light but real.",
+                    "Say 'I messed up' first—takes the sting out.",
+                    "Bet a coffee on who can go a day without a white lie."
+                ],
+                resources: [
+                    "Guide: 'Honesty Habits' - Mindful.org",
+                    "Worksheet: 'Truth Tracker' - TherapistAid.com",
+                    "Article: 'Lies and Love' - Verywell Mind"
+                ]
+            }],
+            "secrets": [{
+                title: "Opening the Vault",
+                steps: [
+                    "Drop one secret over dinner—small steps, big relief.",
+                    "Make a 'secret jar'—write it, share it, burn it.",
+                    "Set a 'why' rule—explain the secret, not just confess.",
+                    "Hug it out after sharing—softens the blow.",
+                    "Pick a 'trust word'—say it when you're hiding something."
+                ],
+                resources: [
+                    "Article: 'Secrets in Relationships' - Psychology Today",
+                    "Guide: 'Safe Sharing' - MindBodyGreen",
+                    "Tool: 'Trust Plan' - Marriage.com"
+                ]
+            }],
+            "jealousy": [{
+                title: "Cooling the Green Flame",
+                steps: [
+                    "Swap a 'you're enough' text every morning.",
+                    "Ban the 'who's that' game—trust first, ask later.",
+                    "Make a 'jealousy list'—talk it out, cross it off.",
+                    "Do a 'no-check' day—no peeking at their stuff.",
+                    "Plan a silly date—jealousy hates fun."
+                ],
+                resources: [
+                    "Guide: 'Taming Jealousy' - Verywell Mind",
+                    "Video: 'Building Trust' - Gottman Institute",
+                    "Article: 'Overcoming Envy' - Healthline"
+                ]
+            }],
+            "privacy": [{
+                title: "Space That Bonds",
+                steps: [
+                    "Draw a 'me time' line—agree on solo zones.",
+                    "Say 'I need space'—no guilt, just clarity.",
+                    "Swap a 'trust me' nod instead of snooping.",
+                    "Set a 'phone down' hour—keeps it chill.",
+                    "Make a 'privacy pact'—what's mine stays mine."
+                ],
+                resources: [
+                    "Article: 'Privacy vs. Trust' - Psychology Today",
+                    "Tool: 'Boundary Guide' - Marriage.com",
+                    "Guide: 'Space in Love' - HelpGuide.org"
+                ]
+            }],
+
+            // Communication
+            "silent-treatment": [{
+                title: "Breaking the Quiet Wall",
+                steps: [
+                    "Flash a 'talk soon?' smile—breaks the ice.",
+                    "Set a 'silence breaker'—one word to restart.",
+                    "Leave a 'I'm ready' note—low pressure.",
+                    "Count to 10, then chat—cuts the standoff.",
+                    "Play a song they love—softens the quiet."
+                ],
+                resources: [
+                    "Article: 'Silent Treatment Effects' - Psychology Today",
+                    "Guide: 'Reconnection Tips' - Gottman Institute",
+                    "Video: 'End the Silence' - HelpGuide.org"
+                ]
+            }],
+            "not-listening": [{
+                title: "Tuning In Together",
+                steps: [
+                    "Say 'hear me out'—grabs their ear.",
+                    "Nod back—shows you're in it too.",
+                    "Set a 'no phones' talk—eyes on, ears open.",
+                    "Repeat one thing they said—proves you're tuned in.",
+                    "Ask 'did I get that?'—keeps it real."
+                ],
+                resources: [
+                    "Guide: 'Listening Well' - Psychology Today",
+                    "Video: 'Active Listening' - Gottman Institute",
+                    "Article: 'Being Heard' - Verywell Mind"
+                ]
+            }],
+            "misunderstandings": [{
+                title: "Untangling the Wires",
+                steps: [
+                    "Say 'wait, rewind'—clarify on the spot.",
+                    "Write it down quick—avoids the tangle.",
+                    "Ask 'what's your take?'—gets their side fast.",
+                    "Laugh it off—'we're a mess, huh?'",
+                    "Set a 'clear it up' minute—short and sweet."
+                ],
+                resources: [
+                    "Worksheet: 'Clear Communication' - TherapistAid.com",
+                    "Guide: 'Fewer Mix-Ups' - Marriage.com",
+                    "Article: 'Better Talks' - MindBodyGreen"
+                ]
+            }],
+            "dominating": [{
+                title: "Sharing the Mic",
+                steps: [
+                    "Pass a 'talk stick'—your turn, my turn.",
+                    "Say 'your shot'—hands them the mic.",
+                    "Time it—five minutes each, no hogging.",
+                    "Ask 'what's on your mind?'—shifts the flow.",
+                    "Pause and grin—gives them space to jump in."
+                ],
+                resources: [
+                    "Video: 'Balanced Chats' - Gottman Institute",
+                    "Article: 'Fair Talking' - Psychology Today",
+                    "Tool: 'Talk Equity' - PositivePsychology.com"
+                ]
+            }],
+            "dismissing": [{
+                title: "Lifting Every Voice",
+                steps: [
+                    "Say 'that's big'—shows it matters.",
+                    "Write their worry down—makes it stick.",
+                    "Ask 'how can I help?'—flips the script.",
+                    "Set a 'no brushing off' day—full attention.",
+                    "Echo it back—'so you're feeling X?'"
+                ],
+                resources: [
+                    "Guide: 'Validating Feelings' - Verywell Mind",
+                    "Worksheet: 'No Dismissal' - TherapistAid.com",
+                    "Article: 'Respect in Love' - Psychology Today"
+                ]
+            }],
+
+            // Intimacy
+            "affection": [{
+                title: "Syncing the Love Vibe",
+                steps: [
+                    "Swap a hug for a wink—meet halfway.",
+                    "Say 'I need this'—keeps it simple.",
+                    "Try their way once—see how it feels.",
+                    "Set a 'touch goal'—one cuddle a day.",
+                    "Ask 'what's your vibe?'—syncs you up."
+                ],
+                resources: [
+                    "Quiz: 'Love Languages' - 5LoveLanguages.com",
+                    "Guide: 'Affection Tips' - Psychology Today",
+                    "Video: 'Touch Needs' - Gottman Institute"
+                ]
+            }],
+            "intimacy": [{
+                title: "Getting Close Again",
+                steps: [
+                    "Cuddle with no strings—just chill.",
+                    "Say 'let's be close'—no pressure.",
+                    "Hold hands for a minute—eases in.",
+                    "Plan a 'lazy touch' night—slow vibes.",
+                    "Ask 'what feels good?'—starts the chat."
+                ],
+                resources: [
+                    "Article: 'Physical Closeness' - Healthline",
+                    "Guide: 'Slow Intimacy' - Psychology Today",
+                    "Video: 'Reconnect Physically' - Gottman Institute"
+                ]
+            }],
+            "romance": [{
+                title: "Sparking It Up",
+                steps: [
+                    "Light a candle—boom, instant mood.",
+                    "Say 'you're my spark'—cheesy works.",
+                    "Dance in the kitchen—zero cost, all vibes.",
+                    "Hide a 'date soon' note—builds hype.",
+                    "Reminisce a hot moment—reignites it."
+                ],
+                resources: [
+                    "Guide: 'Romantic Ideas' - Marriage.com",
+                    "Article: 'Keep the Spark' - Verywell Mind",
+                    "Tool: 'Romance Boost' - PositivePsychology.com"
+                ]
+            }],
+            "appearance": [{
+                title: "Loving What You See",
+                steps: [
+                    "Say 'you're my type'—shuts down doubt.",
+                    "Swap a 'hot list'—what you dig about them.",
+                    "Ditch mirrors for a day—focus on us.",
+                    "Dress up together—confidence boost.",
+                    "Ask 'what's bugging you?'—digs deeper."
+                ],
+                resources: [
+                    "Article: 'Body Image Love' - Psychology Today",
+                    "Guide: 'Self-Esteem Tips' - Healthline",
+                    "Video: 'Confidence Lift' - Verywell Mind"
+                ]
+            }],
+            "initiating": [{
+                title: "Starting the Fire",
+                steps: [
+                    "Wink and say 'your move'—playful start.",
+                    "Set a 'green light' signal—easy yes.",
+                    "Start with a shoulder rub—no rush.",
+                    "Ask 'wanna kick it off?'—light ask.",
+                    "Say 'I'm game'—takes the edge off."
+                ],
+                resources: [
+                    "Video: 'Easy Initiation' - Gottman Institute",
+                    "Article: 'Intimacy Starts' - Healthline",
+                    "Guide: 'Playful Love' - MindBodyGreen"
+                ]
+            }],
+
+            // Time & Attention
+            "neglect": [{
+                title: "Putting Us First",
+                steps: [
+                    "Say 'five for me?'—grabs their focus.",
+                    "Plan a 'you and me' hour—no excuses.",
+                    "Leave a 'miss you' sticky—gentle nudge.",
+                    "Set a 'check-in' text—keeps you close.",
+                    "Do a quick coffee run—shared time."
+                ],
+                resources: [
+                    "Guide: 'Quality Time' - Gottman Institute",
+                    "Article: 'End Neglect' - Verywell Mind",
+                    "Tool: 'Attention Fix' - Marriage.com"
+                ]
+            }],
+            "priorities": [{
+                title: "Finding Our Beat",
+                steps: [
+                    "Swap a 'top 3'—what's your must-do?",
+                    "Set an 'us first' night—priorities align.",
+                    "Say 'let's sync'—quick chat, big win.",
+                    "Trade one task—meet in the middle.",
+                    "Ask 'what's your why?'—gets the root."
+                ],
+                resources: [
+                    "Tool: 'Priority Chart' - PositivePsychology.com",
+                    "Guide: 'Balance Goals' - Marriage.com",
+                    "Article: 'Shared Focus' - Psychology Today"
+                ]
+            }],
+            "phone": [{
+                title: "Ditching the Screen",
+                steps: [
+                    "Say 'phones off, us on'—instant shift.",
+                    "Set a 'screen break'—30 minutes, done.",
+                    "Play a 'no tech' game—beats scrolling.",
+                    "Hide phones for an hour—sneaky fix.",
+                    "Ask 'me or the screen?'—playful jab."
+                ],
+                resources: [
+                    "Article: 'Phone-Free Love' - Healthline",
+                    "Guide: 'Tech Detox' - Mindful.org",
+                    "Video: 'Real Connection' - Verywell Mind"
+                ]
+            }],
+            "work": [{
+                title: "Us Over the Grind",
+                steps: [
+                    "Set a 'home by 6' deal—stick to it.",
+                    "Say 'work's off, we're on'—clear line.",
+                    "Plan a 'no work talk' dinner—chill zone.",
+                    "Ask 'one fun thing tonight?'—shifts focus.",
+                    "Swap a 'de-stress' hug—beats the grind."
+                ],
+                resources: [
+                    "Guide: 'Work-Life Tips' - Gottman Institute",
+                    "Article: 'Balance Love' - Psychology Today",
+                    "Tool: 'Stress Relief' - HelpGuide.org"
+                ]
+            }],
+            "hobbies": [{
+                title: "Blending Our Fun",
+                steps: [
+                    "Say 'join me?'—blend your worlds.",
+                    "Set a 'hobby break'—us time wins.",
+                    "Ask 'what's the rush?'—slows it down.",
+                    "Try their hobby once—gets you in.",
+                    "Plan a 'no hobby' night—pure us."
+                ],
+                resources: [
+                    "Article: 'Hobby Harmony' - MindBodyGreen",
+                    "Guide: 'Shared Fun' - Marriage.com",
+                    "Video: 'Couple Activities' - PositivePsychology.com"
+                ]
+            }]
+        };
+
+        // Get unique solution that hasn't been shown recently
+        function getUniqueSolution(problemKey) {
+            if (!allSolutions[problemKey]) {
+                return {
+                    title: "Custom Solution Approach",
+                    steps: [
+                        "Reflect on your issue with a journal—get it out.",
+                        "Say 'I feel' to start the chat—no blame.",
+                        "Ask a pal for advice—fresh eyes help.",
+                        "Try a 'middle ground' idea—compromise rocks.",
+                        "Track what works—build on the wins."
+                    ],
+                    resources: [
+                        "Article: 'Unique Fixes' - Mindful.org",
+                        "Worksheet: 'Couple Goals' - PositivePsychology.com",
+                        "Your best friend—talk it out!"
+                    ]
+                };
+            }
+
+            if (!solutionHistory[problemKey]) {
+                solutionHistory[problemKey] = [];
+            }
+
+            const availableSolutions = allSolutions[problemKey].filter(
+                (_, index) => !solutionHistory[problemKey].includes(index)
+            );
+
+            if (availableSolutions.length === 0) {
+                solutionHistory[problemKey] = [];
+                return allSolutions[problemKey][Math.floor(Math.random() * allSolutions[problemKey].length)];
+            }
+
+            const randomIndex = Math.floor(Math.random() * availableSolutions.length);
+            const selectedSolution = availableSolutions[randomIndex];
+            const originalIndex = allSolutions[problemKey].indexOf(selectedSolution);
+            solutionHistory[problemKey].push(originalIndex);
+
+            return selectedSolution;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            createHeartsRain();
+            
+            // Create floating hearts
+            const floatingHearts = document.getElementById('floatingHearts');
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '❤';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                heart.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                heart.style.animationDelay = Math.random() * 10 + 's';
+                floatingHearts.appendChild(heart);
+            }
+            
+            // Handle custom issue addition
+            const customIssuesList = document.getElementById('customIssuesList');
+            const addCustomIssueBtn = document.getElementById('addCustomIssue');
+            const customIssueInput = document.getElementById('customIssue');
+            
+            addCustomIssueBtn.addEventListener('click', function() {
+                if (customIssueInput.value.trim() !== '') {
+                    const issueDiv = document.createElement('div');
+                    issueDiv.className = 'd-flex justify-content-between align-items-center p-3 mb-3 rounded';
+                    issueDiv.style.backgroundColor = 'rgba(255, 214, 221, 0.3)';
+                    issueDiv.style.borderLeft = '3px solid var(--valentine-red)';
+                    issueDiv.innerHTML = `
+                        <span>❤ ${customIssueInput.value}</span>
+                        <button class="btn btn-sm btn-outline-danger rounded-circle remove-custom" style="width:30px;height:30px;">×</button>
+                    `;
+                    customIssuesList.appendChild(issueDiv);
+                    customIssueInput.value = '';
+                    
+                    issueDiv.querySelector('.remove-custom').addEventListener('click', function() {
+                        issueDiv.style.animation = 'fadeOut 0.3s';
+                        setTimeout(() => issueDiv.remove(), 300);
+                    });
+                }
+            });
+            
+            // Form submission
+            const issueForm = document.getElementById('issueForm');
+            const solutionsContainer = document.getElementById('solutionsContainer');
+            const solutionContent = document.getElementById('solutionContent');
+            const successStories = document.getElementById('successStories');
+            const submitBtn = document.getElementById('submitBtn');
+            const backToForm = document.getElementById('backToForm');
+            
+            issueForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Finding Your Solutions...';
+                submitBtn.disabled = true;
+                
+                const selectedIssue = document.getElementById('mainIssue').value;
+                const relationshipType = document.getElementById('partnerType').value;
+                const issueDuration = document.getElementById('issueDuration').value;
+                
+                setTimeout(() => {
+                    issueForm.classList.add('hidden');
+                    solutionsContainer.classList.remove('hidden');
+                    successStories.classList.add('hidden');
+                    
+                    const solution = getUniqueSolution(selectedIssue);
+                    let html = `
+                        <h5 class="text-center mb-4" style="color: var(--valentine-red);">${solution.title}</h5>
+                        <div class="solution-panel">
+                            <h6>Recommended Steps:</h6>
+                            <div class="mt-3">`;
+                    
+                    solution.steps.forEach(step => {
+                        html += `<div class="solution-item">${step}</div>`;
+                    });
+                    
+                    html += `</div>
+                            <h6 class="mt-4">Additional Resources:</h6>
+                            <div class="mt-3">`;
+                    
+                    solution.resources.forEach(resource => {
+                        html += `<div class="solution-item">${resource}</div>`;
+                    });
+                    
+                    html += `</div>
+                        </div>
+                        <div class="alert alert-light mt-4" style="border-left: 3px solid var(--valentine-pink);">
+                            <strong>Remember:</strong> Based on your relationship type (${document.getElementById('partnerType').options[document.getElementById('partnerType').selectedIndex].text}) 
+                            and this issue lasting ${document.getElementById('issueDuration').options[document.getElementById('issueDuration').selectedIndex].text.toLowerCase()}, 
+                            these solutions are tailored for your situation.
+                        </div>`;
+                    
+                    solutionContent.innerHTML = html;
+                    
+                    submitBtn.innerHTML = '<span style="font-size: 1.2rem;">Find Healing Solutions</span>';
+                    submitBtn.disabled = false;
+                }, 1500);
+            });
+            
+            backToForm.addEventListener('click', function() {
+                solutionsContainer.classList.add('hidden');
+                issueForm.classList.remove('hidden');
+                successStories.classList.remove('hidden');
+            });
+            
+            // Romantic cursor effect
+            document.addEventListener('mousemove', function(e) {
+                const cursor = document.createElement('div');
+                cursor.className = 'romantic-cursor';
+                cursor.innerHTML = '❤';
+                cursor.style.left = (e.pageX - 10) + 'px';
+                cursor.style.top = (e.pageY - 10) + 'px';
+                cursor.style.fontSize = (Math.random() * 10 + 15) + 'px';
+                cursor.style.opacity = Math.random() * 0.5 + 0.3;
+                document.body.appendChild(cursor);
+                
+                setTimeout(() => {
+                    cursor.style.transform = 'scale(2)';
+                    cursor.style.opacity = '0';
+                    setTimeout(() => cursor.remove(), 300);
+                }, 100);
+            });
+            
+            // Adjust news ticker
+            function adjustNewsTicker() {
+                const newsContent = document.querySelector('.scrolling-news-content');
+                const tips = document.querySelectorAll('.love-tip');
+                let totalWidth = 0;
+                
+                tips.forEach(tip => {
+                    totalWidth += tip.offsetWidth + 50;
+                });
+                
+                newsContent.style.width = totalWidth + 'px';
+            }
+            
+            adjustNewsTicker();
+            window.addEventListener('resize', adjustNewsTicker);
+        });
+    </script>
+</body>
+</html>
